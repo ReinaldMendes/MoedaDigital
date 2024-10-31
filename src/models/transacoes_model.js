@@ -1,18 +1,17 @@
 import { Schema, model } from "mongoose";
 
-const carteiraSchmea = new Schema(
+const transacaoSchema = new Schema(
   {
     walletFrom: {
-      type: [Schema.Types.ObjectId],
+      type: Schema.Types.ObjectId,  // Correção para um único ObjectId
       ref: "Carteira",
       required: true,
     },
     walletTo: {
-      type: [Schema.Types.ObjectId],
+      type: Schema.Types.ObjectId,  // Correção para um único ObjectId
       ref: "Carteira",
       required: true,
     },
-
     amount: {
       type: Number,
       required: true,
@@ -22,13 +21,13 @@ const carteiraSchmea = new Schema(
       type: String,
       required: true,
       enum: ["transfer", "deposit", "withdraw"],
-      default: "withdraw",
+      default: "transfer",  // Valor padrão mais adequado
     },
     status: {
       type: String,
       required: true,
       enum: ["completed", "pending", "failed"],
-      default: "withdraw",
+      default: "pending",  // Valor padrão mais adequado para início de uma transação
     },
     currency: {
       type: String,
@@ -46,6 +45,6 @@ const carteiraSchmea = new Schema(
   }
 );
 
-const Transacao = model("Transacao", carteiraSchmea);
+const Transacao = model("Transacao", transacaoSchema);
 
 export default Transacao;
