@@ -38,9 +38,8 @@ const userSchema = new Schema(
     },
     isActive: {
       type: Boolean,
-      required: true,
+      required: false,
     },
-    +
   },
   {
     timestamps: true,

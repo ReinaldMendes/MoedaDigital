@@ -1,20 +1,14 @@
 import { Router } from "express";
 import {
-  signup,
-  login,
   store,
   index,
   update,
   destroy,
-} from "../controllers/usuario_controller.js";
+} from "../controllers/carteira_controller.js";
 import jwtAuthenticator from "../middlewares/jwt-autenticator.js"; // Middleware para autenticação JWT
 import authorizer from "../middlewares/authorizer.js"; // Middleware para autorização por role
 
 const router = Router();
-
-router.post("/signup", signup);
-
-router.post("/login", login);
 
 router.use(jwtAuthenticator);
 router.use(authorizer("ADMINISTRATOR", "SUPORT"));

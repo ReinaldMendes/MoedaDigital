@@ -1,8 +1,8 @@
-import transacao from "../models/transacoes_model.js";
+import carteira from "../models/carteira_model.js";
 
 export const store = async (req, resp) => {
   try {
-    const content = await transacao.create(req.body);
+    const content = await carteira.create(req.body);
     resp.json();
   } catch (error) {
     resp.json(error);
@@ -10,7 +10,7 @@ export const store = async (req, resp) => {
 };
 export const index = async (req, resp) => {
   try {
-    const content = await transacao.find().exec();
+    const content = await carteira.find().exec();
     resp.json(content);
   } catch (error) {
     resp.json(error);
@@ -18,7 +18,7 @@ export const index = async (req, resp) => {
 };
 export const show = async (req, resp) => {
   try {
-    const content = await transacao
+    const content = await carteira
       .findById(req.params.id)
       .populate("userId")
       .exec();
@@ -29,7 +29,7 @@ export const show = async (req, resp) => {
 };
 export const update = async (req, res) => {
   try {
-    const content = await transacao
+    const content = await carteira
       .findByIdAndUpdate(req.params.id, req.body)
       .exec();
     res.json(content);
@@ -39,7 +39,7 @@ export const update = async (req, res) => {
 };
 export const destroy = async (req, resp) => {
   try {
-    transacao.findByIdAndDelete(req.params.id).exec();
+    carteira.findByIdAndDelete(req.params.id).exec();
     resp.json();
   } catch (error) {
     resp.json(error);
