@@ -6,7 +6,7 @@ export const signup = async (req, res) => {
     const user = await User.create({
       name: req.body.name,
       email: req.body.email,
-      password: await User.hashPassword(req.body.password),  // Criptografa a senha
+      password: req.body.password, // Criptografa a senha
       role: req.body.role,
     });
     const token = jwtServices.generateAcessToken(user);
@@ -64,7 +64,9 @@ export const show = async (req, res) => {
 
 export const update = async (req, res) => {
   try {
-    const content = await User.findByIdAndUpdate(req.params.id, req.body, { new: true }).exec();
+    const content = await User.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    }).exec();
     res.json(content);
   } catch (error) {
     res.status(400).send(error.message);
@@ -74,7 +76,7 @@ export const update = async (req, res) => {
 export const destroy = async (req, res) => {
   try {
     await User.findByIdAndDelete(req.params.id).exec();
-    res.status(204).json();  // Retorna status 204 para indicar exclusão sem conteúdo
+    res.status(204).json(); // Retorna status 204 para indicar exclusão sem conteúdo
   } catch (error) {
     res.status(400).json(error);
   }
