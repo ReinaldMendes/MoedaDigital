@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   store,
   index,
+  show,
   update,
   destroy,
 } from "../controllers/transacoes_controller.js";
@@ -12,10 +13,20 @@ const router = Router();
 
 router.use(jwtAuthenticator);
 router.use(authorizer("ADMINISTRATOR", "SUPORT"));
+
+// Listar todas as transações
 router.get("/", index);
-router.get("/:id", index);
-router.post("/", store); // Criar usuário
-router.put("/:id", update); // Atualizar usuário
-router.delete("/:id", destroy); // Deletar usuário
+
+// Obter uma transação específica pelo ID
+router.get("/:id", show);
+
+// Criar uma nova transação
+router.post("/", store);
+
+// Atualizar uma transação existente
+router.put("/:id", update);
+
+// Excluir uma transação
+router.delete("/:id", destroy);
 
 export default router;
