@@ -1,13 +1,12 @@
 import { Schema, model } from "mongoose";
 
-const carteiraSchmea = new Schema(
+const carteiraSchema = new Schema(
   {
     userId: {
-      type: [Schema.Types.ObjectId],
+      type: Schema.Types.ObjectId,  // Altere para um único ObjectId
       ref: "User",
       required: true,
     },
-
     balance: {
       type: Number,
       required: true,
@@ -25,6 +24,6 @@ const carteiraSchmea = new Schema(
   }
 );
 
-const Carteira = model("Carteira", carteiraSchmea);
+const Carteira = model("Carteira", carteiraSchema);
 
 export default Carteira;
