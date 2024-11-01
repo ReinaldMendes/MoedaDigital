@@ -1,8 +1,8 @@
 import React from "react";
-import WalletForm from "../components/WalletForm.jsx";
-import WalletList from "../components/WalletList.jsx";
-import TransactionForm from "../components/TransactionForm.jsx";
-import TransactionList from "../components/TransactionList.jsx";
+import WalletForm from "../WalletForm.jsx";
+import WalletList from "../WalletList.jsx";
+import TransactionForm from "../TransactionForm.jsx";
+import TransactionList from "../TransactionList.jsx";
 
 const Home = () => {
   return (
