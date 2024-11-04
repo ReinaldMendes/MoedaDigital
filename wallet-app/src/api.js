@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8000/"; // Altere para o URL da sua API
+const API_URL = "https://moedadigital.onrender.com/users/login"; // Altere para o URL da sua API
 
 export const createWallet = (data) => axios.post(`${API_URL}/carteiras`, data);
 export const getWallets = () => axios.get(`${API_URL}/carteiras`);
