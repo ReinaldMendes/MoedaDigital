@@ -1,20 +1,26 @@
 import User from "../models/usuario_model.js";
 import jwtServices from "../services/jwt-services.js";
 
-export const signup = async (req, res) => {
+export const signup = async (req, res) => { 
   try {
     const user = await User.create({
       name: req.body.name,
       email: req.body.email,
-      password: req.body.password, // Criptografa a senha
+      password: req.body.password,
       role: req.body.role,
     });
+
+    // Gerar o token
     const token = jwtServices.generateAcessToken(user);
-    res.json({ user, token });
+
+    // Enviar a resposta de forma padronizada para o frontend
+    res.json({ user, authCode: token }); // `authCode` agora corresponde ao esperado no frontend
   } catch (error) {
-    res.status(400).send(error);
+    // Enviar uma mensagem de erro amigável
+    res.status(400).json({ message: 'Erro ao cadastrar usuário. Verifique os dados e tente novamente.' });
   }
 };
+
 
 export const login = async (req, res) => {
   try {
