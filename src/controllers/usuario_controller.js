@@ -24,15 +24,36 @@ export const signup = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
+    // Verifica se o authCode está no cabeçalho de autorização
+    const authCode = req.headers['authorization'] || req.body.authCode;
+
+    // Se o authCode não estiver presente, retorna erro
+    if (!authCode) {
+      return res.status(400).json({ error: 'Authorization code (authCode) is required' });
+    }
+
+    // Busca o usuário pelo email
     const user = await User.findOne({ email: req.body.email }).exec();
+
+    // Se o usuário for encontrado e a senha for válida
     if (user && (await user.isValidPassword(req.body.password))) {
-      const token = jwtServices.generateAcessToken(user);
-      res.json({ user, token });
+      
+      // Valida o authCode (token)
+      const isValidAuthCode = await jwtServices.verifyAccessToken(authCode);
+      if (!isValidAuthCode) {
+        return res.status(401).json({ error: 'Invalid authCode' });
+      }
+
+      // Gera o novo token de acesso
+      const token = jwtServices.generateAccessToken(user);
+
+      // Retorna os dados do usuário e o token gerado
+      return res.json({ user, token });
     } else {
-      res.status(404).json({ error: "Email or password incorrect" });
+      return res.status(404).json({ error: 'Email or password incorrect' });
     }
   } catch (error) {
-    res.status(400).send(error.message);
+    return res.status(500).send({ error: error.message });
   }
 };
 
