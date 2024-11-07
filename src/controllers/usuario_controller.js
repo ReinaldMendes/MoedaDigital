@@ -14,7 +14,8 @@ export const signup = async (req, res) => {
     const token = jwtServices.generateAcessToken(user);
 
     // Enviar a resposta de forma padronizada para o frontend
-    res.json({ user, authCode: token }); // `authCode` agora corresponde ao esperado no frontend
+    res.status(201).json({ user, authCode: token });
+ // `authCode` agora corresponde ao esperado no frontend
   } catch (error) {
     // Enviar uma mensagem de erro amigável
     res.status(400).json({ message: 'Erro ao cadastrar usuário. Verifique os dados e tente novamente.' });
