@@ -58,13 +58,24 @@ export const destroy = async (req, resp) => {
 // Função para consultar o saldo de uma carteira por userId
 export const getBalance = async (req, res) => {
   try {
-    const content = await Carteira.findOne({ userId: req.params.userId }).exec();
-    if (content) {
-      res.json({ balance: content.balance });
-    } else {
-      res.status(404).json({ error: "Carteira não encontrada para este usuário." });
+    const { userId: tokenUserId } = req.user;  // Obtém o userId do token JWT
+    const { userId: paramUserId } = req.params;  // Obtém o userId da URL
+
+    // Verifica se o userId do token corresponde ao userId da URL
+    if (tokenUserId !== paramUserId) {
+      return res.status(403).json({ error: "Acesso negado. O usuário não tem permissão para acessar esta carteira." });
     }
+
+    // Busca a carteira associada ao userId
+    const content = await Carteira.findOne({ userId: paramUserId }).exec();
+
+    if (!content) {
+      return res.status(404).json({ error: "Carteira não encontrada para este usuário." });
+    }
+
+    res.json({ balance: content.balance, currency: content.currency });
   } catch (error) {
-    res.status(400).json(error);
+    res.status(400).json({ error: "Erro ao consultar o saldo da carteira.", details: error.message });
   }
 };
+
