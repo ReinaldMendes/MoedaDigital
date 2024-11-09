@@ -20,6 +20,7 @@ router.use(authorizer("ADMINISTRATOR", "SUPPORT"));
 router.get("/", index); // Listar todas as carteiras
 router.get("/:id", show); // Exibir uma carteira específica pelo ID
 router.get("/balance/:userId", getBalance); // Consultar saldo de uma carteira por userId
+
 router.post("/", store); // Criar carteira
 router.put("/:id", update); // Atualizar carteira
 router.delete("/:id", destroy); // Deletar carteira
