@@ -11,7 +11,7 @@ import jwtAuthenticator from "../middlewares/jwt-autenticator.js"; // Middleware
 import authorizer from "../middlewares/authorizer.js"; // Middleware para autorização por role
 
 const router = Router();
-
+router.get("/balance/:userId", getBalance);
 // Middleware para autenticação e autorização
 router.use(jwtAuthenticator);
 router.use(authorizer("ADMINISTRATOR", "SUPPORT"));
