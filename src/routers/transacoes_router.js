@@ -11,8 +11,8 @@ import authorizer from "../middlewares/authorizer.js"; // Middleware para autori
 
 const router = Router();
 
-router.use(jwtAuthenticator);
-router.use(authorizer("ADMINISTRATOR", "SUPORT"));
+// router.use(jwtAuthenticator);
+// router.use(authorizer("ADMINISTRATOR", "SUPORT"));
 
 // Listar todas as transações
 router.get("/", index);
